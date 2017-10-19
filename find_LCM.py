@@ -6,25 +6,35 @@ def minmax(a, b):
     y = max(a,b)
     return x, y
 
-def factors(a, b):
-    if a>1:
-        if a%2==0:
-            a = a/2
-            if b%2==0 and b>1:
-                b = b/2
-                print a, b
-                # return a, b, 2
+def factors(a=1, b=1):
+    if (a>1) and (b>1):
+        if (a%2==0) and (b%2==0):
+            return a/2, b/2, 2
+        elif (a%2==0) and (b%2!=0):
+            return a/2, b, 2
+        elif (a%2!=0) and (b%2==0):
+            if (b%a==0):
+                return a/a, b/a, a
             else:
-                print a, b, 2
-                # return a, b, 2
+                return a, b/2, 2
+        elif (a%2!=0) and (b%2!=0):
+            if (b%a==0):
+                return a/a, b/a, a
+            else:
+                return a/a, b, a
+    elif (a>1) and (b==1):
+        if (a%2==0):
+            return a/2, b, 2
         else:
-            if b%a==0:
-                b = b/a
-                c = a
-                a = a/a
-                print a, b
-                # return a, b, c
+            return a/a, b, a
+    elif (a==1) and (b>1):
+        if (b%2==0):
+            return a, b/2, 2
+        else:
+            return a, b/b, b
     else:
+        return a, b, 1
+
 
 def read_number():
     while True:
@@ -33,13 +43,21 @@ def read_number():
             return x
 
 def main():
-    x1 = read_number()
-    x2 = read_number()
-    a, b = minmax(x1, x2)
+    a = read_number()
+    b = read_number()
+    x1, x2 = minmax(a, b)
 
+    lcm = []
 
-
-    factors(x1, x2)
+    while True:
+        x1, x2, x3 = factors(x1, x2)
+        lcm.append(x3)
+        if ((x1==1) and (x2==1)):
+            break
+    y = 1
+    for i in range(len(lcm)):
+        y *= lcm[i]
+    print y, "IS LCM"
 
 main()
 
